@@ -1,15 +1,20 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-
-import HomePage from '../components/HomePage.vue'
+import CityPageCard from '../components/CityPageCard.vue'
+import WeatherPage from '../components/WeatherPage.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
-    name: 'HomePage',
-    component: HomePage
+    name: 'WeatherPage',
+    component: WeatherPage
+  },
+  {
+    path: ':id',
+    name: 'CityPageCard',
+    component: CityPageCard
   },
 
 ]
