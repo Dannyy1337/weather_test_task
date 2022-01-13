@@ -12,7 +12,7 @@ const routes = [
     component: WeatherPage
   },
   {
-    path: ':id',
+    path: '/:id',
     name: 'CityPageCard',
     component: CityPageCard
   },

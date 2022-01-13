@@ -18,6 +18,7 @@
 <script>
 import { cities } from "../data/cityData";
 import CityPage from "./CityPage.vue";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "CityPageCard",
@@ -25,7 +26,6 @@ export default {
   data() {
     return {
       cities: cities,
-      selectedCity: null,
       breadcrumbs_item: [
         {
           text: "Back",
@@ -40,18 +40,20 @@ export default {
       ],
     };
   },
+  computed: {
+    selectedCity() {
+      return this.cityById(this.cityId);
+    },
+    ...mapGetters(["cityById"]),
+  },
   created() {
-    this.handleRouteId(this.$route.params.id);
+    console.log("here");
+    const locationCheck = window.location.pathname.split("/");
+    this.cityId = locationCheck[locationCheck.length - 1];
+    this.getWeatherByCityId(this.cityId);
   },
   methods: {
-    handleRouteId(id) {
-      this.cities.forEach((item) => {
-        if (item.id === id) {
-          this.selectedCity = item;
-          return;
-        }
-      });
-    },
+    ...mapActions(["getWeatherByCityId"]),
   },
 };
 </script>

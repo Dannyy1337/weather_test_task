@@ -3,12 +3,10 @@
     <v-row>
       <v-col md="5">
         <v-card>
-          <v-img height="350" :src="imgWeather" class="d-flex align-end">
-            <v-card-title class="d-flex justify-space-between">
-              <h2 class="text-h2 white--text">{{ name }}</h2>
-              <h2 class="text-h2 white--text">{{ temp }}&deg;</h2>
-            </v-card-title>
-          </v-img>
+          <v-card-title class="d-flex ">
+            <h2 class="text-h2">{{ name }}</h2>
+            <h2 class="text-h2">{{ temp }}&deg;</h2>
+          </v-card-title>
         </v-card>
       </v-col>
       <v-col md="7">
@@ -35,6 +33,9 @@ export default {
     temp: Number,
     descriptionWeather: String,
     imgWeather: String,
+  },
+  created() {
+    console.log("hello", this.name);
   },
 };
 </script>

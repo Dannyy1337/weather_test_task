@@ -1,9 +1,15 @@
 <template>
   <div>
     <v-row class="city_list mx-4">
-      <v-col xl="4" md="4" class="d-flex flex-wrap">
+      <v-btn @click="locatorButtonPressed">get location</v-btn>
+      <v-col
+        xl="4"
+        md="4"
+        class="d-flex flex-wrap"
+        v-if="allCities && allCities.length > 0"
+      >
         <weather-card
-          v-for="city in citiesData"
+          v-for="city in allCities"
           :key="city.id"
           :city="city"
           class="my-1 mx-1"
@@ -18,11 +24,11 @@
             v-for="(selectedCity, index) in citiesForSelected"
             :key="index"
           >
-            {{ selectedCity }}
+            {{ selectedCity.name }}
           </option>
         </select>
         <span>Выбрано: {{ selected }}</span>
-        <v-btn @click="addCityCard">+</v-btn>
+        <v-btn @click="addCityCard(selected)">+</v-btn>
       </v-col>
     </v-row>
   </div>
@@ -31,6 +37,7 @@
 <script>
 import WeatherCard from "./WeatherCard.vue";
 import { cities } from "../data/cityData";
+import { mapActions, mapState, mapMutations } from "vuex";
 
 export default {
   components: { WeatherCard },
@@ -38,27 +45,51 @@ export default {
     return {
       citiesData: cities,
       selected: "",
-      someId: 1,
       citiesForSelected: [
-        "Kyiv",
-        "Lviv",
-        "Odessa",
-        "Kharkiv",
-        "Dnepr",
-        "Poltava",
-        "Donetsk",
+        { name: "Kyiv" },
+        { name: "Lviv" },
+        { name: "Odessa" },
+        { name: "Kharkiv" },
+        { name: "Dnepr" },
+        { name: "Poltava" },
+        { name: "Donetsk" },
       ],
+      selectedCity: null,
+      geolocation: {
+        lat: null,
+        lon: null,
+      },
     };
   },
+  computed: {
+    ...mapState({
+      allCities: "weatherData",
+    }),
+  },
   methods: {
-    addCityCard() {
-      this.citiesData.push({
-        id: this.someId++,
-        name: this.selected,
-      });
-
-      console.log(this.citiesData);
+    addCityCard(name) {
+      this.getWeatherByCityName(name);
     },
+    locatorButtonPressed() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (geolocationData) => {
+            this.geolocation = {
+              lat: geolocationData.coords.latitude,
+              lon: geolocationData.coords.longitude,
+            };
+            this.getWeatherByCityLocation(this.geolocation);
+          },
+          (error) => {
+            console.log(error.message);
+          }
+        );
+      } else {
+        console.log("Your browser does not support geolocation API");
+      }
+    },
+    ...mapActions(["getWeatherByCityName", "getLocationApi"]),
+    ...mapMutations(["updateWeatherData", "removeFromWeatherData"]),
   },
 };
 </script>

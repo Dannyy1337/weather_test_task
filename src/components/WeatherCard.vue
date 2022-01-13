@@ -1,11 +1,18 @@
 <template>
   <v-row>
     <v-col class="weather__component">
-      <v-card class="city__card" v-if="deleteCard">
+      <v-card class="city__card">
         <div class="click-zone" @click="show = true">
           <v-card-title>
-            <h3>{{ temp }}</h3>
-            <h3>{{ name }}</h3>
+            <h3>{{ city.temp }}</h3>
+            <h3>{{ city.name }}</h3>
+            <p>id: {{ city.id }}</p>
+            <!-- <p
+              v-for="weatherData in allallWeatherData"
+              :key="weatherData.weather.id"
+            >
+              123
+            </p> -->
           </v-card-title>
           <v-img height="250"></v-img>
         </div>
@@ -41,21 +48,21 @@
             depressed
             elevation="3"
             rounded
-            @click="deleteCard = false"
+            @click="removeFromWeatherData(city.id)"
             >remove</v-btn
           >
         </v-card-text>
       </v-card>
     </v-col>
 
-    <modal-window :temp="temp" :show="show" v-if="show" @close="show = false" />
+    <modal-window :temp="city.temp" :show="show" v-if="show" @close="show = false" />
   </v-row>
 </template>
 
 <script>
-import axios from "axios";
+import { mapActions, mapMutations } from "vuex";
+
 import ModalWindow from "./ModalWindow.vue";
-// import {cities} from '../data/cityData'
 
 export default {
   name: "WeatherCard",
@@ -67,33 +74,24 @@ export default {
   },
   data() {
     return {
-      temp: null,
       show: false,
-      deleteCard: true,
+
     };
   },
   methods: {
-    async callApi(city) {
-      await axios
-        .get(
-          `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=d1c911f8b78b22a045fb3362c92c74f4`
-        )
-        .then((response) => {
-          this.temp = response.data.main.temp;
-          this.name = response.data.name;
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    },
     intervalData() {
-      setTimeout(() => this.callApi(this.city.name), 1000);
-      console.log("timeout");
+      setTimeout(() => this.getWeatherByCityId(this.city.name), 1000);
+      console.log("weqweqw");
     },
+    ...mapActions(["getWeatherByCityName"]),
+    ...mapMutations(["removeFromWeatherData"]),
   },
-  created() {
-    this.callApi(this.city.name);
-  },
+  // created() {
+  //   console.log("Weather Card");
+  //   this.getWeatherByCityName(this.city.name);
+  //   const locationCheck = window.location.pathname.split("/");
+  //   this.cityId = locationCheck[locationCheck.length - 1];
+  // },
 };
 </script>
 
