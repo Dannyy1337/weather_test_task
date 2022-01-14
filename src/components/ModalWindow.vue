@@ -82,23 +82,4 @@ export default {
   }
 }
 
-// animation
-
-// .fade-enter-active {
-//   animation: 0.75s fade forwards;
-// }
-
-// .fade-enter,
-// .fade-leave-to {
-//   opacity: 0;
-// }
-
-// @keyframes fade {
-//   from {
-//     opacity: 0;
-//   }
-//   to {
-//     opacity: .5;
-//   }
-// }
 </style>

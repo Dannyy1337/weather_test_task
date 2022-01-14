@@ -17,7 +17,7 @@
               elevation="3"
               rounded
               icon
-              @click="removeFromWeatherData(city.id)"
+              @click.stop="removeFromWeatherData(city.id)"
               >X</v-btn
             >
           </v-card-title>
@@ -47,19 +47,19 @@
         </v-card-text>
       </v-card>
     </v-col>
-<transition name='modal'>
-    <modal-window
-      :temp="city.temp"
-      :name="city.name"
-      :show="show"
-      :feelsLikeTemp="city.feelsLikeTemp"
-      :maxTemp="city.maxTemp"
-      :minTemp="city.minTemp"
-      :iconRef="iconRef"
-      v-if="show"
-      @close="show = false"
-    />
-</transition>
+    <transition name="modal">
+      <modal-window
+        :temp="city.temp"
+        :name="city.name"
+        :show="show"
+        :feelsLikeTemp="city.feelsLikeTemp"
+        :maxTemp="city.maxTemp"
+        :minTemp="city.minTemp"
+        :iconRef="iconRef"
+        v-if="show"
+        @close="show = false"
+      />
+    </transition>
   </v-row>
 </template>
 
@@ -101,10 +101,12 @@ export default {
 
 // animation
 
-.modal-enter-active, .modal-leave-active{
-  transition: all .5s;
+.modal-enter-active,
+.modal-leave-active {
+  transition: all 0.5s;
 }
-.modal-enter, .modal-leave-to{
-  transform: translateY(-200px) ;
+.modal-enter,
+.modal-leave-to {
+  transform: translateY(-200px);
 }
 </style>

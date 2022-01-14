@@ -18,10 +18,11 @@ export default new Vuex.Store({
     },
     removeFromWeatherData(state, id) {
       const index = state.weatherData.findIndex(item => item.id === id);
+      console.log(index)
       if (state.weatherData.length === 1) {
         state.weatherData = []
       } else {
-        state.weatherData = state.weatherData.splice(index - 1, 1);
+        state.weatherData.splice(index - 1, 1);
       }
     }
   },

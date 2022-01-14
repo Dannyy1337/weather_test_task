@@ -27,7 +27,11 @@
         >add</v-btn
       >
 
-      <select v-model="selected" onblur='this.size=1;' onchange='this.size=1; this.blur();'>
+      <select
+        v-model="selected"
+        onblur="this.size=1;"
+        onchange="this.size=1; this.blur();"
+      >
         <option disabled value="">Choose one of cities</option>
         <option v-for="(selectedCity, index) in citiesForSelected" :key="index">
           {{ selectedCity.name }}
@@ -81,7 +85,11 @@ export default {
     addCityCard(name) {
       this.getWeatherByCityName(name);
     },
-    ...mapActions(["getWeatherByCityName", "getLocationApi"]),
+    ...mapActions([
+      "getWeatherByCityName",
+      "getLocationApi",
+      "getWeatherByCityLocation",
+    ]),
     ...mapMutations(["updateWeatherData", "removeFromWeatherData"]),
   },
   mounted() {
@@ -116,6 +124,7 @@ select {
   background: rgba(155, 155, 155, 0);
   margin-top: 10px;
   box-shadow: 2px 2px rgba(0, 0, 0, 0.349);
+  padding: 5px;
   // position: absolute;
   // right: 35%;
   &:hover {

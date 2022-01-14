@@ -4,10 +4,9 @@
       <v-col md="5">
         <v-card>
           <v-card-title class="d-flex justify-space-between flex-wrap">
-           
             <h2 class="text-h2">{{ temp }}&deg;</h2>
             <h2 class="text-h2">{{ name }}</h2>
-             <v-img :src="iconRef" max-height="100" max-width="100"></v-img>
+            <v-img :src="iconRef" max-height="100" max-width="100"></v-img>
           </v-card-title>
         </v-card>
       </v-col>
@@ -72,9 +71,18 @@ export default {
     minTemp: Number,
     maxTemp: Number,
     feelsLikeTemp: Number,
-    windSpeed: Number,
-    windDeg: Number,
-    windGust: Number,
+    windSpeed: {
+      type: Number,
+      default: 0,
+    },
+    windDeg: {
+      type: Number,
+      default: 0,
+    },
+    windGust: {
+      type: Number,
+      default: 0,
+    },
   },
   data() {
     return {
