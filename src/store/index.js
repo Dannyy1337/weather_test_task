@@ -35,12 +35,16 @@ export default new Vuex.Store({
           const weatherData = response.data;
           let weatherDataObject = {
             name: weatherData.name,
-            main: weatherData.weather.main,
+            main: weatherData.weather[0].main,
             temp: weatherData.main.temp,
             minTemp: weatherData.main.temp_min,
             maxTemp: weatherData.main.temp_max,
             feelsLikeTemp: weatherData.main.feels_like,
-            id: weatherData.id
+            icon: weatherData.weather[0].icon,
+            windSpeed: weatherData.wind.speed,
+            windDeg: weatherData.wind.deg,
+            windGust: weatherData.wind.gust,
+            id: weatherData.id,
           }
           commit('updateWeatherData', weatherDataObject)
         })
@@ -57,11 +61,15 @@ export default new Vuex.Store({
           const weatherData = response.data;
           let weatherDataObject = {
             name: weatherData.name,
-            main: weatherData.weather.main,
+            main: weatherData.weather[0].main,
             temp: weatherData.main.temp,
             minTemp: weatherData.main.temp_min,
             maxTemp: weatherData.main.temp_max,
             feelsLikeTemp: weatherData.main.feels_like,
+            icon: weatherData.weather[0].icon,
+            windSpeed: weatherData.wind.speed,
+            windDeg: weatherData.wind.deg,
+            windGust: weatherData.wind.gust,
             id: weatherData.id
           }
           commit('updateWeatherData', weatherDataObject)
@@ -76,16 +84,21 @@ export default new Vuex.Store({
           const weatherData = response.data;
           let weatherDataObject = {
             name: weatherData.name,
-            main: weatherData.weather.main,
+            main: weatherData.weather[0].main,
             temp: weatherData.main.temp,
             minTemp: weatherData.main.temp_min,
             maxTemp: weatherData.main.temp_max,
             feelsLikeTemp: weatherData.main.feels_like,
+            icon: weatherData.weather[0].icon,
+            windSpeed: weatherData.wind.speed,
+            windDeg: weatherData.wind.deg,
+            windGust: weatherData.wind.gust,
             id: weatherData.id
           }
           commit('updateWeatherData', weatherDataObject)
         });
     },
+
   },
   getters: {
     cityById: (state) => (id) => {

@@ -1,30 +1,30 @@
 <template>
   <v-row>
     <v-col class="weather__component">
-      <v-card class="city__card">
+      <v-card class="city__card" elevation="3" outlined max-width="200">
         <div class="click-zone" @click="show = true">
-          <v-card-title>
-            <h3>{{ city.temp }}</h3>
-            <h3>{{ city.name }}</h3>
-            <p>id: {{ city.id }}</p>
-            <!-- <p
-              v-for="weatherData in allallWeatherData"
-              :key="weatherData.weather.id"
+          <v-card-title class="d-flex flex-column">
+            <h3 class="mt-7">{{ city.name }}</h3>
+            <h3>{{ city.temp }}&deg;</h3>
+            <v-img :src="iconRef"></v-img>
+            <p>{{ city.main }}</p>
+            <v-btn
+              color="blue"
+              class="remove-btn"
+              plain
+              outlined
+              depressed
+              elevation="3"
+              rounded
+              icon
+              @click="removeFromWeatherData(city.id)"
+              >X</v-btn
             >
-              123
-            </p> -->
           </v-card-title>
-          <v-img height="250"></v-img>
+          <!-- <v-img height="250"></v-img> -->
         </div>
-        <v-card-text>
-          <div class="click-zone" @click="show = true">
-            <p>
-              <b>sdasd </b>
-            </p>
-            <!-- <p v-if="weather">{{ weather }}&deg;C</p> -->
-            <p>asd</p>
-          </div>
-          <v-btn color="orange" plain outlined depressed elevation="3" rounded
+        <v-card-text class="d-flex justify-center">
+          <v-btn color="blue" plain outlined depressed elevation="3" rounded
             ><router-link
               :to="{ name: 'CityPageCard', params: { id: city.id } }"
               tag="button"
@@ -32,36 +32,39 @@
             ></v-btn
           >
           <v-btn
-            color="orange"
+            color="blue"
             plain
             outlined
+            icon
             depressed
             elevation="3"
             rounded
             @click="intervalData"
-            >refresh</v-btn
+            class="ml-4"
           >
-          <v-btn
-            color="orange"
-            plain
-            outlined
-            depressed
-            elevation="3"
-            rounded
-            @click="removeFromWeatherData(city.id)"
-            >remove</v-btn
-          >
+            <i class="fas fa-redo-alt"></i
+          ></v-btn>
         </v-card-text>
       </v-card>
     </v-col>
-
-    <modal-window :temp="city.temp" :show="show" v-if="show" @close="show = false" />
+<transition name='modal'>
+    <modal-window
+      :temp="city.temp"
+      :name="city.name"
+      :show="show"
+      :feelsLikeTemp="city.feelsLikeTemp"
+      :maxTemp="city.maxTemp"
+      :minTemp="city.minTemp"
+      :iconRef="iconRef"
+      v-if="show"
+      @close="show = false"
+    />
+</transition>
   </v-row>
 </template>
 
 <script>
 import { mapActions, mapMutations } from "vuex";
-
 import ModalWindow from "./ModalWindow.vue";
 
 export default {
@@ -75,7 +78,7 @@ export default {
   data() {
     return {
       show: false,
-
+      iconRef: `http://openweathermap.org/img/wn/${this.city.icon}@2x.png`,
     };
   },
   methods: {
@@ -86,17 +89,22 @@ export default {
     ...mapActions(["getWeatherByCityName"]),
     ...mapMutations(["removeFromWeatherData"]),
   },
-  // created() {
-  //   console.log("Weather Card");
-  //   this.getWeatherByCityName(this.city.name);
-  //   const locationCheck = window.location.pathname.split("/");
-  //   this.cityId = locationCheck[locationCheck.length - 1];
-  // },
 };
 </script>
 
 <style lang="scss" scoped>
-// ::-webkit-scrollbar {
-//   width: 0;
-// }
+.remove-btn {
+  position: absolute;
+  top: 3%;
+  right: 5%;
+}
+
+// animation
+
+.modal-enter-active, .modal-leave-active{
+  transition: all .5s;
+}
+.modal-enter, .modal-leave-to{
+  transform: translateY(-200px) ;
+}
 </style>

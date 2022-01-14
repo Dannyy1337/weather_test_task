@@ -1,11 +1,10 @@
 <template>
-  <div>
-    <v-row class="city_list mx-4">
-      <v-btn @click="locatorButtonPressed">get location</v-btn>
-      <v-col
+  <div class="wrapper d-flex flex-column justify-center">
+    <div class="d-flex align-center justify-space-around wrapper">
+      <div
         xl="4"
         md="4"
-        class="d-flex flex-wrap"
+        class="d-flex column"
         v-if="allCities && allCities.length > 0"
       >
         <weather-card
@@ -14,23 +13,27 @@
           :city="city"
           class="my-1 mx-1"
         ></weather-card>
-      </v-col>
-    </v-row>
-    <v-row>
-      <v-col>
-        <select v-model="selected">
-          <option disabled value="">Choose one of cities</option>
-          <option
-            v-for="(selectedCity, index) in citiesForSelected"
-            :key="index"
-          >
-            {{ selectedCity.name }}
-          </option>
-        </select>
-        <span>Выбрано: {{ selected }}</span>
-        <v-btn @click="addCityCard(selected)">+</v-btn>
-      </v-col>
-    </v-row>
+      </div>
+    </div>
+    <div class="d-flex justify-center mb-20">
+      <v-btn
+        button
+        elevation="3"
+        fab
+        outlined
+        color="white lighten-3 "
+        class="add-btn"
+        @click="addCityCard(selected)"
+        >add</v-btn
+      >
+
+      <select v-model="selected" onblur='this.size=1;' onchange='this.size=1; this.blur();'>
+        <option disabled value="">Choose one of cities</option>
+        <option v-for="(selectedCity, index) in citiesForSelected" :key="index">
+          {{ selectedCity.name }}
+        </option>
+      </select>
+    </div>
   </div>
 </template>
 
@@ -53,6 +56,14 @@ export default {
         { name: "Dnepr" },
         { name: "Poltava" },
         { name: "Donetsk" },
+        { name: "Cherkasy" },
+        { name: "Chernihiv" },
+        { name: "Ternopil" },
+        { name: "Zhytomyr" },
+        { name: "Vinnytsia" },
+        { name: "Rivne" },
+        { name: "Luhansk" },
+        { name: "Khmelnytsk" },
       ],
       selectedCity: null,
       geolocation: {
@@ -70,26 +81,60 @@ export default {
     addCityCard(name) {
       this.getWeatherByCityName(name);
     },
-    locatorButtonPressed() {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-          (geolocationData) => {
-            this.geolocation = {
-              lat: geolocationData.coords.latitude,
-              lon: geolocationData.coords.longitude,
-            };
-            this.getWeatherByCityLocation(this.geolocation);
-          },
-          (error) => {
-            console.log(error.message);
-          }
-        );
-      } else {
-        console.log("Your browser does not support geolocation API");
-      }
-    },
     ...mapActions(["getWeatherByCityName", "getLocationApi"]),
     ...mapMutations(["updateWeatherData", "removeFromWeatherData"]),
   },
+  mounted() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (geolocationData) => {
+          this.geolocation = {
+            lat: geolocationData.coords.latitude,
+            lon: geolocationData.coords.longitude,
+          };
+          this.getWeatherByCityLocation(this.geolocation);
+        },
+        (error) => {
+          console.log(error.message);
+        }
+      );
+    } else {
+      console.log("Your browser does not support geolocation API");
+    }
+  },
 };
 </script>
+
+<style lang="scss" scoped>
+select {
+  margin-bottom: 30px;
+  border: 2px solid white;
+  color: white;
+  margin-left: 30px;
+  border-radius: 8px;
+  font-size: 20px;
+  background: rgba(155, 155, 155, 0);
+  margin-top: 10px;
+  box-shadow: 2px 2px rgba(0, 0, 0, 0.349);
+  // position: absolute;
+  // right: 35%;
+  &:hover {
+    border: 2px solid rgb(70, 203, 255);
+    transition: 0.25s ease;
+  }
+  &:focus {
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+    color: black;
+  }
+  & option {
+    background-color: white;
+  }
+}
+.wrapper {
+  min-width: 100%;
+}
+.column {
+  flex-wrap: wrap;
+}
+</style>

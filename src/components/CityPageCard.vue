@@ -2,15 +2,21 @@
   <div>
     <v-row>
       <v-col>
-        <v-breadcrumbs :items="breadcrumbs_item"></v-breadcrumbs>
+        <v-breadcrumbs :items="breadcrumbs_item" class="text-h4"></v-breadcrumbs>
       </v-col>
     </v-row>
     <city-page
       v-if="selectedCity"
       :name="selectedCity.name"
       :temp="selectedCity.temp"
-      :imgWeather="selectedCity.imgWeather"
-      :descriptionWeather="selectedCity.descriptionWeather"
+      :icon="selectedCity.icon"
+      :main="selectedCity.main"
+      :minTemp="selectedCity.minTemp"
+      :maxTemp="selectedCity.maxTemp"
+      :feelsLikeTemp="selectedCity.feelsLikeTemp"
+      :windSpeed="selectedCity.windSpeed"
+      :windDeg="selectedCity.windDeg"
+      :windGust="selectedCity.windGust"
     />
   </div>
 </template>
