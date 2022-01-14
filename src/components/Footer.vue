@@ -2,7 +2,7 @@
   <div>
     <v-footer color="blue lighten-3">
       <v-col class="font-weight-bold text-center white--text"
-        >footer</v-col
+        >All rights reserved.</v-col
       ></v-footer
     >
   </div>
