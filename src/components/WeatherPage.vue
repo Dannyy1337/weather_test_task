@@ -125,8 +125,6 @@ select {
   margin-top: 10px;
   box-shadow: 2px 2px rgba(0, 0, 0, 0.349);
   padding: 5px;
-  // position: absolute;
-  // right: 35%;
   &:hover {
     border: 2px solid rgb(70, 203, 255);
     transition: 0.25s ease;

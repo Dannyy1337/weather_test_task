@@ -21,7 +21,6 @@
               >X</v-btn
             >
           </v-card-title>
-          <!-- <v-img height="250"></v-img> -->
         </div>
         <v-card-text class="d-flex justify-center">
           <v-btn color="blue" plain outlined depressed elevation="3" rounded
