@@ -67,7 +67,7 @@ export default {
         { name: "Vinnytsia" },
         { name: "Rivne" },
         { name: "Luhansk" },
-        { name: "Khmelnytsk" },
+        { name: "Sumy" },
       ],
       selectedCity: null,
       geolocation: {
