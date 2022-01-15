@@ -22,7 +22,7 @@ export default new Vuex.Store({
       if (state.weatherData.length === 1) {
         state.weatherData = []
       } else {
-        state.weatherData.splice(index - 1, 1);
+        state.weatherData.splice(index, 1);
       }
     }
   },
